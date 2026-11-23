@@ -168,6 +168,8 @@ Todo el contenido proviene del material del curso **Check Point Certified Securi
 - Las opciones se reordenan de forma determinista al generar el contenido (semilla por pregunta),
   de modo que la respuesta correcta queda repartida entre todas las posiciones y no siempre en la
   misma letra. El orden es estable entre compilaciones.
+- Las opciones se redactaron con longitudes comparables: la correcta no es la más larga en la
+  mayoría de las preguntas, para que la longitud no delate la respuesta.
 
 ### Cobertura por módulo
 
