@@ -52,13 +52,13 @@
 
   async function loadConfig() {
     const res = await fetch(DATA.auth, { cache: "no-store" });
-    if (!res.ok) throw new Error("No se pudo cargar la configuración de acceso.");
+    if (!res.ok) throw new Error("Could not load the access configuration.");
     return res.json();
   }
 
   async function loadPayload() {
     const res = await fetch(DATA.content, { cache: "no-store" });
-    if (!res.ok) throw new Error("No se pudo cargar el banco de preguntas.");
+    if (!res.ok) throw new Error("Could not load the question bank.");
     return res.json();
   }
 
@@ -87,7 +87,7 @@
 
   function setBusy(busy) {
     els.btn.disabled = busy;
-    els.btn.querySelector("span").textContent = busy ? "Verificando…" : "Entrar al simulador";
+    els.btn.querySelector("span").textContent = busy ? "Verifying…" : "Enter the simulator";
   }
 
   async function tryUnlockWithStoredKey() {
@@ -112,7 +112,7 @@
 
     const waiting = lockUntil - Date.now();
     if (waiting > 0) {
-      showError(`Demasiados intentos. Espera ${Math.ceil(waiting / 1000)} segundos.`);
+      showError(`Too many attempts. Wait ${Math.ceil(waiting / 1000)} seconds.`);
       return;
     }
 
@@ -120,7 +120,7 @@
     // Normalización acordada: se ignoran espacios al inicio/fin y mayúsculas.
     const password = els.pass.value.trim().toLowerCase();
     if (!username || !password) {
-      showError("Escribe tu usuario y tu contraseña.");
+      showError("Type your username and password.");
       return;
     }
 
@@ -147,9 +147,9 @@
         if (failures >= MAX_TRIES) {
           lockUntil = Date.now() + LOCK_MS;
           failures = 0;
-          showError("Credenciales incorrectas. Acceso bloqueado 30 segundos.");
+          showError("Wrong credentials. Access locked for 30 seconds.");
         } else {
-          showError(`Credenciales incorrectas. Te quedan ${MAX_TRIES - failures} intento(s).`);
+          showError(`Wrong credentials. ${MAX_TRIES - failures} attempt(s) left.`);
         }
         els.pass.value = "";
         els.pass.focus();
@@ -170,7 +170,7 @@
       unlockUI();
       if (window.CCSA_APP && document.querySelector("#toast")) {
         const t = document.querySelector("#toast");
-        t.textContent = "Sesión iniciada. ¡A practicar!";
+        t.textContent = "Signed in. Let's practice!";
         t.classList.add("is-show");
         setTimeout(() => t.classList.remove("is-show"), 2400);
       }
@@ -178,8 +178,8 @@
       console.error(err);
       showError(
         location.protocol === "file:"
-          ? "Abre la web desde su enlace publicado (no como archivo local) para poder verificar el acceso."
-          : "No se pudo verificar el acceso. Revisa tu conexión e inténtalo de nuevo."
+          ? "Open the site from its published link (not as a local file) so access can be verified."
+          : "Could not verify access. Check your connection and try again."
       );
     } finally {
       setBusy(false);
@@ -217,8 +217,8 @@
     els.toggle.addEventListener("click", () => {
       const show = els.pass.type === "password";
       els.pass.type = show ? "text" : "password";
-      els.toggle.textContent = show ? "Ocultar" : "Ver";
-      els.toggle.setAttribute("aria-label", show ? "Ocultar contraseña" : "Mostrar contraseña");
+      els.toggle.textContent = show ? "Hide" : "Show";
+      els.toggle.setAttribute("aria-label", show ? "Hide password" : "Show password");
       els.pass.focus();
     });
 

@@ -1,182 +1,180 @@
-# Simulador CCSA R82 · Entrenamiento Check Point
+# CCSA R82 Simulator · Check Point Practice Exam
 
-Aplicación web de práctica para el examen **Check Point Certified Security Administrator (CCSA) R82**.
-Se abre desde un enlace, no requiere instalar nada y guarda tu progreso en el navegador.
+Web practice app for the **Check Point Certified Security Administrator (CCSA) R82** exam.
+It opens from a link, needs no installation and stores your progress in the browser.
 
-> **Acceso privado.** El sitio pide usuario y contraseña. Las credenciales las entrega quien
-> administra el simulador; no están escritas en este repositorio.
+> **Private access.** The site asks for a username and password. Credentials are handed out by
+> whoever runs the simulator; they are not written anywhere in this repository.
 
-**Sitio publicado:** <https://mrcastillof.github.io/ccsa-r82-simulador/>
+**Live site:** <https://mrcastillof.github.io/ccsa-r82-simulador/>
 
 ---
 
-## 1. Qué incluye
+## 1. What is inside
 
-| Función | Detalle |
+| Feature | Detail |
 | --- | --- |
-| Banco de preguntas | **132 preguntas** de los **10 módulos** del curso |
-| Tipos de pregunta | Selección única (99) y selección múltiple (33), con aviso cuando hay que marcar varias |
-| Tamaño de sesión | Eliges cuántas preguntas practicar, hasta el total disponible |
-| Sin repetición | Dentro de una sesión cada pregunta aparece una sola vez, en orden aleatorio |
-| Dos modos | *Práctica guiada* (corrección y explicación al instante) y *Simulacro real* (resultado al final) |
-| Retroalimentación | Explicación escrita de cada respuesta + módulo y página exacta del material |
-| Puntaje | Aciertos sobre total, porcentaje y umbral de referencia del 70 % |
-| Revisión | Lista de todas las preguntas con tu respuesta, la correcta y la explicación |
-| Progreso | Historial de sesiones, promedio, evolución por sesión y cobertura del banco |
-| Almacenamiento | `localStorage` + cookies (el historial se conserva entre sesiones y equipos) |
-| Imágenes | Figuras extraídas del material, referenciadas por página y ampliables |
-| Diseño | Interfaz oscura tipo plataforma de cursos, animaciones suaves, barra de progreso y mapa de sesión |
+| Question bank | **132 questions** across the **10 modules** of the course |
+| Question types | Single choice (99) and multiple choice (33), with a clear hint when several options must be picked |
+| Session size | You choose how many questions to answer, up to the whole bank |
+| No repeats | Inside a session each question appears once, in random order |
+| Two modes | *Guided practice* (correction and explanation right away) and *Exam simulation* (results only at the end) |
+| Feedback | A written explanation for every answer, plus the exact course page it comes from |
+| Score | Correct answers, percentage and the 70 % reference threshold |
+| Review | Every question with your answer, the correct one and the explanation |
+| Progress | Session history, average, score trend and bank coverage |
+| Storage | `localStorage` + cookies (history is kept between sessions and devices) |
+| Images | Figures taken from the course material, labelled by page and expandable |
+| Interface | Dark course-platform look, smooth animations, progress bar and session map, mobile ready |
 
 ---
 
-## 2. Cómo se usa
+## 2. How to use it
 
-1. Abre el enlace del sitio publicado.
-2. Escribe el **usuario** y la **contraseña** que te compartieron.
-3. Elige el número de preguntas y el modo de práctica.
-4. Responde: en *Práctica guiada* verás de inmediato si acertaste y por qué.
-5. Al terminar verás tu puntaje, el desglose por módulo y la revisión completa.
-6. Con **Nueva sesión** empiezas de cero con preguntas nuevas.
+1. Open the published link.
+2. Type the **username** and **password** you were given.
+3. Choose how many questions to answer and the practice mode.
+4. Answer away: in *Guided practice* you immediately see whether you were right and why.
+5. At the end you get your score, the per-module breakdown and the full review.
+6. **New session** starts fresh with different questions.
 
-Atajos: teclas `1`–`5` para elegir opción, `Enter` para comprobar o pasar a la siguiente.
+Shortcuts: keys `1`–`5` pick an option, `Enter` checks the answer or moves on.
 
-### Sobre el acceso
+### About access
 
-La contraseña **no se guarda** en el servidor ni en el repositorio. Con ella se deriva una clave
-(AES-256-GCM + PBKDF2-SHA256, 310 000 iteraciones) que descifra el banco de preguntas en tu navegador.
-Si la contraseña es incorrecta, el contenido no se puede descifrar.
+The password is **never stored** on a server or in the repository. It derives a key
+(AES-256-GCM + PBKDF2-SHA256, 310 000 iterations) that decrypts the question bank in your browser.
+With a wrong password the content simply cannot be decrypted.
 
-El inicio de sesión **no distingue mayúsculas** y **ignora los espacios** al inicio y al final, para
-evitar problemas al teclear o pegar desde el móvil.
+Sign-in **ignores capital letters** and **spaces** at the beginning or end, to avoid problems when
+typing or pasting on a phone.
 
-### Sobre el progreso
+### About progress
 
-- Cada sesión nueva empieza desde cero: no arrastra respuestas anteriores.
-- Se guardan el historial y las preguntas vistas (localStorage + cookies) para que puedas
-  retomar el estudio y ver tu evolución.
-- Puedes borrarlo todo desde **Mi progreso → Borrar mi progreso**.
+- Every new session starts from zero: nothing is carried over from previous answers.
+- History and seen questions are saved (localStorage + cookies) so you can pick up where you left off.
+- You can erase everything from **My progress → Erase my progress**.
 
 ---
 
-## 3. Probar en local
+## 3. Run it locally
 
-El sitio necesita servirse por HTTP (el navegador bloquea `fetch` y las cookies en `file://`):
+The site must be served over HTTP (browsers block `fetch` and cookies on `file://`):
 
 ```bash
 cd checkpoint-ccsa
 python -m http.server 8080
-# abre http://localhost:8080
+# open http://localhost:8080
 ```
 
-También vale `npx serve .` o la extensión *Live Server* de VS Code.
+`npx serve .` or the VS Code *Live Server* extension also work.
 
 ---
 
-## 4. Publicar en GitHub Pages (gratis)
+## 4. Publish on GitHub Pages (free)
 
-Este proyecto ya está publicado: **<https://mrcastillof.github.io/ccsa-r82-simulador/>**.
-GitHub Pages sirve el contenido de la rama **`gh-pages`**.
+This project is already published at **<https://mrcastillof.github.io/ccsa-r82-simulador/>**.
+GitHub Pages serves it from the **`gh-pages`** branch.
 
-Para recrearlo desde cero:
+To recreate it from scratch:
 
-1. Crea un repositorio (puede ser público) y sube el contenido de esta carpeta:
+1. Create a repository (it can be public) and push the contents of this folder:
 
    ```bash
    git init
    git add .
-   git commit -m "Simulador CCSA R82"
+   git commit -m "CCSA R82 simulator"
    git branch -M main
-   git remote add origin https://github.com/TU_USUARIO/TU_REPO.git
+   git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git
    git push -u origin main
-   git push origin main:gh-pages    # esta rama activa GitHub Pages
+   git push origin main:gh-pages    # this branch turns Pages on
    ```
 
-2. En GitHub: **Settings → Pages** → *Deploy from a branch*, rama **`gh-pages`**, carpeta `/ (root)` → **Save**.
-   (Si la rama `gh-pages` ya existe, GitHub suele activarlo automáticamente.)
-3. En 1–2 minutos el sitio queda en `https://TU_USUARIO.github.io/TU_REPO/`.
+2. On GitHub: **Settings → Pages** → *Deploy from a branch*, branch **`gh-pages`**, folder `/ (root)` → **Save**.
+   (If the `gh-pages` branch already exists, GitHub usually enables it automatically.)
+3. In 1–2 minutes the site is live at `https://YOUR_USER.github.io/YOUR_REPO/`.
 
-### Actualizar el sitio
+### Update the site
 
 ```bash
-git add -A && git commit -m "Cambios" && git push origin main
-git push origin main:gh-pages        # publica la última versión
+git add -A && git commit -m "Changes" && git push origin main
+git push origin main:gh-pages        # publishes the latest version
 ```
 
-> El repositorio contiene únicamente el contenido **cifrado** (`assets/data/content.enc.json`)
-> y la huella del usuario (`assets/data/auth.json`). El banco en claro no se publica.
+> The repository only contains the **encrypted** content (`assets/data/content.enc.json`) and the
+> username fingerprint (`assets/data/auth.json`). The plain-text bank is not published.
 
 ---
 
-## 5. Cambiar usuario y contraseña
+## 5. Change the username and password
 
-Necesitas el banco de preguntas en claro (`contenido/preguntas.json`) y los scripts de `tools/`.
-Desde la carpeta que contiene `contenido/` y `checkpoint-ccsa/`:
+You need the plain-text question bank (`contenido/preguntas.json`) and the scripts in `tools/`.
+From the folder that contains `contenido/` and `checkpoint-ccsa/`:
 
 ```bash
-# 1) Une los módulos en un solo archivo (si editaste alguno)
+# 1) Join the modules into one file (if you edited any module)
 node tools/merge-content.mjs
 
-# 2) Vuelve a cifrar con las credenciales nuevas
-node tools/build-content.mjs --user "nuevoUsuario" --pass "NuevaClaveSegura" \
+# 2) Re-encrypt with the new credentials
+node tools/build-content.mjs --user "newUser" --pass "NewStrongPass" \
   --in contenido/preguntas.json --out checkpoint-ccsa
 
-# 3) Comprueba que se descifra bien
-node tools/verify-decrypt.mjs checkpoint-ccsa "nuevoUsuario" "NuevaClaveSegura"
+# 3) Check that it decrypts
+node tools/verify-decrypt.mjs checkpoint-ccsa "newUser" "NewStrongPass"
 ```
 
-Después haz commit y push de `assets/data/*.json`. La contraseña nunca se escribe en disco:
-solo se guarda su huella derivada (sal + hash del usuario) y el contenido cifrado.
+Then commit and push `assets/data/*.json`. The password is never written to disk: only its derived
+fingerprint (salt + username hash) and the encrypted content are stored.
 
-Recomendaciones: contraseña larga (16+ caracteres), cambiarla si se filtra y no reutilizarla.
+Recommendations: long password (16+ characters), rotate it if it leaks, never reuse it.
 
 ---
 
-## 6. Estructura del proyecto
+## 6. Project layout
 
 ```
 checkpoint-ccsa/
-├── index.html                  Interfaz completa (login + inicio + examen + resultados + progreso)
+├── index.html                  Full UI (login + home + exam + results + progress)
 ├── assets/
-│   ├── css/styles.css          Diseño, animaciones y adaptación a móvil
-│   ├── js/auth.js              Login, derivación de clave y descifrado del banco
-│   ├── js/app.js               Motor de sesiones, corrección, puntaje y persistencia
-│   ├── data/content.enc.json   Banco de preguntas cifrado (AES-256-GCM)
-│   ├── data/auth.json          Sal, iteraciones y huella del usuario
-│   └── img/                    Figuras extraídas del material + favicon
+│   ├── css/styles.css          Layout, animations and mobile adaptation
+│   ├── js/auth.js              Login, key derivation and content decryption
+│   ├── js/app.js               Session engine, grading, scoring and persistence
+│   ├── data/content.enc.json   Encrypted question bank (AES-256-GCM)
+│   ├── data/auth.json          Salt, iterations and username fingerprint
+│   └── img/                    Figures cropped from the material + favicon
 ├── tools/
-│   ├── merge-content.mjs       Une los módulos en preguntas.json
-│   ├── build-content.mjs       Cifra el banco y genera auth.json
-│   ├── verify-decrypt.mjs      Comprueba credenciales y descifrado
-│   └── make-preview.mjs        Copia local sin login (solo para revisar diseño)
+│   ├── merge-content.mjs       Joins the modules into preguntas.json
+│   ├── build-content.mjs       Encrypts the bank and writes auth.json
+│   ├── verify-decrypt.mjs      Checks credentials and decryption
+│   └── make-preview.mjs        Local copy without login (design checks only)
 ├── .nojekyll
 └── README.md
 ```
 
-El banco **en claro** (`contenido/`) se entrega aparte, fuera del repositorio público, junto con las
-capturas del material. Por eso los scripts se ejecutan desde la carpeta padre que contiene
-`contenido/` y la carpeta de la app.
+The plain-text bank (`contenido/`) is delivered separately, outside the public repository, together
+with the material screenshots. That is why the scripts run from the parent folder that holds
+`contenido/` and the app folder.
 
 ---
 
-## 7. Origen del contenido y trazabilidad
+## 7. Where the content comes from
 
-Todo el contenido proviene del material del curso **Check Point Certified Security Administrator
-(CCSA) R82** (guía del estudiante *Security Administrator*, 521 páginas).
+All content comes from the **Check Point Certified Security Administrator (CCSA) R82** course
+material (*Security Administrator* student guide, 521 pages).
 
-- Se trabajó sobre **474 capturas de página** del material (OCR con Tesseract y verificación visual).
-- Cada pregunta guarda su **módulo** y su **página** de origen, y la interfaz los muestra
-  (por ejemplo: *Módulo 4 · página 197*).
-- Las explicaciones parafrasean lo que dice el material; no se añadieron conceptos externos.
-- Las figuras adjuntas se recortaron de las páginas correspondientes y se referencian con su página.
-- Las opciones se reordenan de forma determinista al generar el contenido (semilla por pregunta),
-  de modo que la respuesta correcta queda repartida entre todas las posiciones y no siempre en la
-  misma letra. El orden es estable entre compilaciones.
-- Las opciones se redactaron con longitudes comparables: la correcta no es la más larga en la
-  mayoría de las preguntas, para que la longitud no delate la respuesta.
+- Work was done from **474 page screenshots** of the material (Tesseract OCR plus visual review).
+- Every question stores its **module** and its **page**, and the interface shows them
+  (for example: *Module 4 · page 197*).
+- Explanations paraphrase what the material says; no external concepts were added.
+- Attached figures were cropped from the matching pages and are labelled with their page.
+- Options are reordered deterministically when the content is generated (one seed per question),
+  so the correct answer is spread across all positions instead of always being the same letter.
+  The order is stable between builds.
+- Options were written with comparable lengths, so length alone rarely reveals the answer.
 
-### Cobertura por módulo
+### Coverage by module
 
-| Módulo | Nombre | Preguntas | Páginas |
+| Module | Name | Questions | Pages |
 | --- | --- | --- | --- |
 | 1 | Introduction to Quantum Security | 24 | 19–49 |
 | 2 | Administrator Account Management | 14 | 105–121 |
@@ -189,49 +187,47 @@ Todo el contenido proviene del material del curso **Check Point Certified Securi
 | 9 | Application Control and URL Filtering | 7 | 465–471 |
 | 10 | Threat Prevention Fundamentals | 8 | 497–504 |
 
-Las páginas intermedias del material son laboratorios guiados (pasos de clics en el entorno),
-por eso no generan preguntas de examen.
+The pages in between are guided labs (click-by-click steps in the environment), which is why they do
+not produce exam questions.
 
 ---
 
-## 8. Limitaciones y puntos ambiguos (importante)
+## 8. Limitations and known ambiguities (please read)
 
-1. **No se recibió el archivo `examen_checkpoint.pdf`.** La carpeta entregada contenía las
-   capturas de página del material del curso CCSA R82, no un banco de preguntas con respuestas.
-   Por eso las preguntas se redactaron a partir de las afirmaciones conceptuales del material,
-   **no** se copiaron de una clave de respuestas oficial.
-2. **No es un examen oficial.** Es material de estudio. La formulación del examen real y su
-   puntaje de aprobación pueden variar.
-3. **Páginas de laboratorio.** Los módulos incluyen decenas de páginas de prácticas con
-   credenciales y direcciones IP del entorno de laboratorio (por ejemplo `Chkp!234`);
-   no se incluyeron como preguntas para no evaluar detalles efímeros del laboratorio.
-4. **Transcripción.** El texto se extrajo por OCR de capturas de pantalla. Se revisó visualmente
-   lo usado en las preguntas, pero puede haber diferencias menores de formato en las figuras.
-5. **Preguntas de selección múltiple.** En el material, la mayoría de los conceptos se presentan
-   como listas. Cuando la respuesta natural es un conjunto de elementos, la pregunta se marcó como
-   múltiple y la interfaz indica cuántas opciones hay que marcar. La corrección exige la
-   coincidencia exacta del conjunto.
-6. **Temas fuera del alcance del curso.** Custom Threat Prevention, Smart-1 Cloud, API y funciones
-   avanzadas se mencionan en el material pero se remiten a otros cursos; solo se preguntó lo que
-   el CCSA R82 desarrolla.
-
----
-
-## 9. Seguridad: qué protege y qué no
-
-- **Protege:** el banco de preguntas está cifrado; sin credenciales válidas no se puede leer,
-  ni siquiera mirando el código fuente o el repositorio.
-- **No protege:** al ser un sitio estático, la página de inicio de sesión y el código son públicos,
-  y una contraseña débil podría ser atacada por fuerza bruta *offline* sobre el archivo cifrado.
-  Usa una contraseña larga y exclusiva.
-- Si necesitas autenticación real del lado del servidor (por ejemplo, cuentas por correo o
-  Google), publica la misma carpeta en **Cloudflare Pages** y protégela con **Cloudflare Access**
-  (plan gratuito para equipos pequeños). La app funciona igual: solo cambia dónde se aloja.
+1. **No `examen_checkpoint.pdf` was provided.** The folder contained page screenshots of the CCSA R82
+   course material, not a question bank with an answer key. The questions were therefore written from
+   the conceptual statements in the material, **not** copied from an official answer key.
+2. **This is not the official exam.** It is study material. The real exam wording and its passing
+   score may differ; 70 % is used here only as a reference threshold.
+3. **Lab pages.** The modules include dozens of lab pages with environment credentials and IP
+   addresses (for example `Chkp!234`). Those are not used as questions, to avoid testing ephemeral
+   lab details.
+4. **Transcription.** Text was extracted with OCR from screenshots. Everything used in questions was
+   reviewed visually, but figures may show minor formatting differences.
+5. **Multiple-choice questions.** In the material most concepts appear as lists. When the natural
+   answer is a set of items, the question is marked as multiple choice and the interface states how
+   many options must be picked. Grading requires the exact set.
+6. **Topics beyond the course.** Custom Threat Prevention, Smart-1 Cloud, APIs and advanced features
+   are mentioned but deferred to other courses; only what CCSA R82 covers is asked.
+7. **Language.** The interface and the question bank are in English. The original working notes and
+   the Spanish draft of the bank are kept outside the public repository.
 
 ---
 
-## 10. Aviso legal
+## 9. Security: what it protects and what it does not
 
-Material de estudio independiente, elaborado a partir del contenido del curso CCSA R82.
-Check Point, Quantum y SmartConsole son marcas de Check Point Software Technologies Ltd.
-Este proyecto no está afiliado ni avalado por Check Point.
+- **It protects:** the question bank is encrypted; without valid credentials it cannot be read, not
+  even by looking at the source code or the repository.
+- **It does not protect:** being a static site, the login page and the code are public, and a weak
+  password could be attacked offline against the encrypted file. Use a long, unique password.
+- If you need real server-side authentication (for example email or Google accounts), publish the same
+  folder on **Cloudflare Pages** behind **Cloudflare Access** (free tier for small teams). The app works
+  unchanged; only the hosting changes.
+
+---
+
+## 10. Legal notice
+
+Independent study material built from the CCSA R82 course content.
+Check Point, Quantum and SmartConsole are trademarks of Check Point Software Technologies Ltd.
+This project is not affiliated with or endorsed by Check Point.

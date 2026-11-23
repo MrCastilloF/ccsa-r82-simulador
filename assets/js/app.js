@@ -42,7 +42,7 @@
 
   const fmtDate = (iso) => {
     try {
-      return new Intl.DateTimeFormat("es", { dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
+      return new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
     } catch (e) {
       return iso;
     }
@@ -269,11 +269,11 @@
     els.qCount.value = String(value);
 
     const all = value >= max;
-    els.qCountOut.textContent = all ? `Todas (${max})` : String(value);
-    els.quickAll.textContent = `Todas (${max})`;
+    els.qCountOut.textContent = all ? `All (${max})` : String(value);
+    els.quickAll.textContent = `All (${max})`;
     els.countHint.textContent = all
-      ? `Usarás el banco completo: ${plural(max, "pregunta", "preguntas")}.`
-      : `Elegiste ${plural(value, "pregunta", "preguntas")} de ${max} disponibles.`;
+      ? `You will use the whole bank: ${plural(max, "question", "questions")}.`
+      : `You picked ${plural(value, "question", "questions")} of ${max} available.`;
 
     const pct = max === 5 ? 100 : ((value - 5) / (max - 5)) * 100;
     els.qCount.style.setProperty("--fill", `${pct}%`);
@@ -297,9 +297,9 @@
     QUESTIONS.forEach((q) => { counts[q.module] = (counts[q.module] || 0) + 1; });
     els.moduleGrid.innerHTML = MODULES.map((m) => `
       <article class="module-card">
-        <span class="module-card__tag">${escapeHtml(m.tag || "Módulo")}</span>
+        <span class="module-card__tag">${escapeHtml(m.tag || "Module")}</span>
         <h3 class="module-card__name">${escapeHtml(m.name)}</h3>
-        <p class="module-card__meta">${plural(counts[m.id] || 0, "pregunta", "preguntas")} · pág. ${escapeHtml(String(m.pages || "—"))}</p>
+        <p class="module-card__meta">${plural(counts[m.id] || 0, "question", "questions")} · p. ${escapeHtml(String(m.pages || "—"))}</p>
       </article>`).join("");
 
     // Última sesión
@@ -307,7 +307,7 @@
     if (history.length) {
       const last = history[0];
       els.lastRun.hidden = false;
-      els.lastRunText.textContent = `${fmtDate(last.finishedAt)} · ${last.correct} de ${last.total} correctas · modo ${last.mode === "exam" ? "simulacro" : "práctica"}.`;
+      els.lastRunText.textContent = `${fmtDate(last.finishedAt)} · ${last.correct} of ${last.total} correct · ${last.mode === "exam" ? "exam simulation" : "guided practice"}.`;
       els.lastRunScore.textContent = `${last.percent}%`;
       els.lastRunScore.style.color = last.percent >= PASS_MARK ? "var(--ok)" : "var(--bad)";
     } else {
@@ -342,7 +342,7 @@
 
   function startSession(opts) {
     const total = totalQuestions();
-    if (!total) { toast("No hay preguntas cargadas."); return; }
+    if (!total) { toast("No questions loaded."); return; }
 
     let count = opts && opts.count ? opts.count : parseInt(els.qCount.value, 10);
     count = clamp(count || Math.min(20, total), 1, total);
@@ -368,7 +368,7 @@
     db.saveSettings({ count, mode, avoidSeen });
     db.saveActive(session);
     els.btnRestart.hidden = false;
-    els.examScore.textContent = mode === "exam" ? "Aciertos: —" : "Aciertos: 0";
+    els.examScore.textContent = mode === "exam" ? "Correct: —" : "Correct: 0";
     els.streakValue.textContent = "0";
     showScreen("exam");
     renderQuestion();
@@ -399,7 +399,7 @@
     const answered = session.checked[q.id];
     const selection = session.answers[q.id] || [];
 
-    els.questionNum.textContent = `Pregunta ${session.index + 1}`;
+    els.questionNum.textContent = `Question ${session.index + 1}`;
     els.questionText.textContent = q.question;
 
     // Imagen asociada (si la pregunta depende de una figura del material)
@@ -419,7 +419,7 @@
     }
 
     // Tipo de pregunta
-    els.examType.textContent = isMulti(q) ? "Selección múltiple" : "Selección única";
+    els.examType.textContent = isMulti(q) ? "Multiple choice" : "Single choice";
     els.examType.classList.toggle("pill--multi", isMulti(q));
 
     // Pista
@@ -452,9 +452,9 @@
     // Estado de la barra y botones
     els.progressFill.style.width = `${((session.index + (answered ? 1 : 0)) / session.total) * 100}%`;
     els.progressWrap.setAttribute("aria-valuenow", String(Math.round(((session.index + (answered ? 1 : 0)) / session.total) * 100)));
-    els.examCounter.textContent = `Pregunta ${session.index + 1} de ${session.total}`;
+    els.examCounter.textContent = `Question ${session.index + 1} of ${session.total}`;
     if (session.mode !== "exam") {
-      els.examScore.textContent = `Aciertos: ${session.correctCount}`;
+      els.examScore.textContent = `Correct: ${session.correctCount}`;
     }
 
     if (answered) {
@@ -562,7 +562,7 @@
     els.btnNext.hidden = false;
     els.btnNext.textContent = session.index + 1 >= session.total ? "Ver resultado →" : "Siguiente →";
     els.btnSkip.hidden = true;
-    els.examScore.textContent = `Aciertos: ${session.correctCount}`;
+    els.examScore.textContent = `Correct: ${session.correctCount}`;
     els.progressFill.style.width = `${((session.index + 1) / session.total) * 100}%`;
     renderNavigator();
     els.btnNext.focus({ preventScroll: true });
@@ -574,16 +574,16 @@
     els.feedback.hidden = false;
     els.feedback.className = "feedback " + (ok ? "is-ok" : "is-bad");
     els.feedbackIcon.textContent = ok ? "✓" : "✕";
-    els.feedbackTitle.textContent = ok ? "¡Correcto!" : "Respuesta incorrecta";
+    els.feedbackTitle.textContent = ok ? "Correct!" : "Incorrect answer";
 
     const correctTexts = (q.answer || []).map((i) => q.options[i]).join(" · ");
     const yours = (session.answers[q.id] || []).map((i) => q.options[i]).join(" · ");
     els.feedbackAnswer.textContent = ok
-      ? "Buen trabajo, ese es el concepto clave."
-      : `Tu respuesta: ${yours || "sin responder"}\nCorrecta: ${correctTexts}`;
+      ? "Nice work — that is the key concept."
+      : `Your answer: ${yours || "no answer"}\nCorrect: ${correctTexts}`;
 
     els.feedbackExplain.textContent = q.explanation || "";
-    els.feedbackSource.textContent = `Fuente: material CCSA R82, ${moduleName(q.module)} · página ${q.page}${replay ? " (revisión)" : ""}.`;
+    els.feedbackSource.textContent = `Source: CCSA R82 material, ${moduleName(q.module)} · page ${q.page}${replay ? " (review)" : ""}.`;
   }
 
   function goNext() {
@@ -616,7 +616,7 @@
       b.type = "button";
       b.className = "navdot";
       b.textContent = String(i + 1);
-      b.title = `Pregunta ${i + 1}`;
+      b.title = `Question ${i + 1}`;
       const done = Object.prototype.hasOwnProperty.call(session.checked, qid);
       if (done) {
         b.classList.add(session.mode === "exam" ? "is-done" : (session.checked[qid] ? "is-ok" : "is-bad"));
@@ -693,14 +693,14 @@
     els.resTime.textContent = fmtClock(result.elapsedMs);
 
     const passed = result.percent >= PASS_MARK;
-    els.resVerdict.textContent = passed ? "Aprobado" : "Sigue practicando";
+    els.resVerdict.textContent = passed ? "Passed" : "Keep practicing";
     els.resVerdict.className = "pill " + (passed ? "tag--ok" : "tag--bad");
     els.resVerdict.style.background = passed ? "var(--ok-soft)" : "var(--bad-soft)";
     els.resVerdict.style.color = passed ? "var(--ok)" : "var(--bad)";
-    els.resTitle.textContent = passed ? "¡Objetivo superado!" : "Vamos por buen camino";
+    els.resTitle.textContent = passed ? "Target cleared!" : "Good progress";
     els.resMessage.textContent = passed
-      ? `Acertaste ${result.correct} de ${result.total}. El umbral de referencia es ${PASS_MARK}%. Revisa las falladas para cerrar los huecos.`
-      : `Acertaste ${result.correct} de ${result.total}. El umbral de referencia es ${PASS_MARK}%. Repasa las explicaciones y vuelve a intentarlo: es la forma más rápida de subir.`;
+      ? `You got ${result.correct} of ${result.total}. The reference threshold is ${PASS_MARK}%. Review the missed ones to close the gaps.`
+      : `You got ${result.correct} of ${result.total}. The reference threshold is ${PASS_MARK}%. Read the explanations and try again: it is the fastest way up.`;
 
     // Anillo
     const circumference = 2 * Math.PI * 52;
@@ -721,8 +721,8 @@
 
     els.btnReviewWrong.hidden = result.wrong === 0;
     els.btnReviewWrong.textContent = result.wrong === 1
-      ? "Repasar la fallada"
-      : `Repasar las ${result.wrong} falladas`;
+      ? "Review the missed question"
+      : `Review the ${result.wrong} missed questions`;
   }
 
   function renderBreakdown(result) {
@@ -746,9 +746,9 @@
     const history = db.history().slice(0, 6);
     els.historyList.innerHTML = history.map((h) => `
       <li>
-        <span>${escapeHtml(fmtDate(h.finishedAt))} · ${h.mode === "exam" ? "Simulacro" : "Práctica"}</span>
+        <span>${escapeHtml(fmtDate(h.finishedAt))} · ${h.mode === "exam" ? "Exam" : "Practice"}</span>
         <b style="color:${h.percent >= PASS_MARK ? "var(--ok)" : "var(--bad)"}">${h.percent}%</b>
-      </li>`).join("") || `<li><span>Aún no hay sesiones guardadas.</span></li>`;
+      </li>`).join("") || `<li><span>No sessions saved yet.</span></li>`;
   }
 
   function renderReview(result) {
@@ -762,7 +762,7 @@
       const correctTexts = a.answer.map((idx) => `${LETTERS[idx]}) ${a.options[idx]}`).join(" · ");
       const yourTexts = a.selected.length
         ? a.selected.map((idx) => `${LETTERS[idx]}) ${a.options[idx]}`).join(" · ")
-        : "Sin responder";
+        : "No answer";
       return `<article class="review-item ${a.correct ? "is-right" : "is-wrong"}" data-q="${a.qid}">
         <button class="review-item__btn" type="button" aria-expanded="false">
           <span class="review-item__badge" aria-hidden="true">${a.correct ? "✓" : "✕"}</span>
@@ -770,12 +770,12 @@
           <span class="review-item__meta">${escapeHtml(moduleShort(a.module))} · p. ${a.page}</span>
         </button>
         <div class="review-item__body">
-          <p class="review-item__row ${a.correct ? "is-ok" : "is-bad"}"><b>Tu respuesta:</b> ${escapeHtml(yourTexts)}</p>
-          <p class="review-item__row is-ok"><b>Respuesta correcta:</b> ${escapeHtml(correctTexts)}</p>
+          <p class="review-item__row ${a.correct ? "is-ok" : "is-bad"}"><b>Your answer:</b> ${escapeHtml(yourTexts)}</p>
+          <p class="review-item__row is-ok"><b>Correct answer:</b> ${escapeHtml(correctTexts)}</p>
           <p class="review-item__explain">${escapeHtml((byId.get(a.qid) || {}).explanation || "")}</p>
         </div>
       </article>`;
-    }).join("") || `<p class="hint">No hay preguntas en este filtro.</p>`;
+    }).join("") || `<p class="hint">No questions in this filter.</p>`;
 
     $$(".review-item__btn", els.reviewList).forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -821,7 +821,7 @@
 
     if (!data.length) {
       ctx.fillStyle = "rgba(157,171,208,.65)";
-      ctx.fillText("Sin datos todavía", pad.l + 8, pad.t + h / 2);
+      ctx.fillText("No data yet", pad.l + 8, pad.t + h / 2);
       return;
     }
 
@@ -879,10 +879,10 @@
     const answered = seenIds.length;
 
     els.kpiGrid.innerHTML = [
-      ["Sesiones completadas", sessions],
-      ["Promedio", `${avg}%`],
-      ["Mejor puntaje", `${best}%`],
-      ["Preguntas vistas", `${answered}/${totalQuestions()}`]
+      ["Sessions completed", sessions],
+      ["Average", `${avg}%`],
+      ["Best score", `${best}%`],
+      ["Questions seen", `${answered}/${totalQuestions()}`]
     ].map(([label, value]) => `
       <div class="kpi"><span class="kpi__num">${escapeHtml(String(value))}</span><span class="kpi__label">${escapeHtml(label)}</span></div>`).join("");
 
@@ -911,12 +911,12 @@
     tbody.innerHTML = history.map((h) => `
       <tr>
         <td>${escapeHtml(fmtDate(h.finishedAt))}</td>
-        <td>${h.mode === "exam" ? "Simulacro" : "Práctica"}</td>
+        <td>${h.mode === "exam" ? "Exam" : "Practice"}</td>
         <td>${h.correct}/${h.total}</td>
         <td>${h.percent}%</td>
         <td>${fmtClock(h.elapsedMs || 0)}</td>
-        <td><span class="tag ${h.percent >= PASS_MARK ? "tag--ok" : "tag--bad"}">${h.percent >= PASS_MARK ? "Aprobado" : "A repasar"}</span></td>
-      </tr>`).join("") || `<tr><td colspan="6">Todavía no completaste ninguna sesión.</td></tr>`;
+        <td><span class="tag ${h.percent >= PASS_MARK ? "tag--ok" : "tag--bad"}">${h.percent >= PASS_MARK ? "Passed" : "Needs review"}</span></td>
+      </tr>`).join("") || `<tr><td colspan="6">You have not finished a session yet.</td></tr>`;
 
     // Preguntas vistas
     const rows = seenIds
@@ -932,7 +932,7 @@
         <span class="seen-row__q">${escapeHtml(q.question)}</span>
         <span class="seen-row__meta">${escapeHtml(moduleShort(q.module))} · p. ${q.page} · ${s.times}×</span>
       </div>`;
-    }).join("") : `<p class="hint">Aún no has visto ninguna pregunta.</p>`;
+    }).join("") : `<p class="hint">You have not seen any question yet.</p>`;
   }
 
   /* ------------------------------------------------------------------ */
@@ -986,12 +986,12 @@
       });
     }
     els.btnFinishEarly.addEventListener("click", async () => {
-      const ok = await confirmDialog("¿Finalizar ahora?", "Te quedan preguntas por responder. Se contarán como incorrectas y verás tu resultado parcial.");
+      const ok = await confirmDialog("Finish now?", "Questions are still unanswered. They will count as incorrect and you will see your partial result.");
       if (ok) finishSession();
     });
 
     els.btnAbort.addEventListener("click", async () => {
-      const ok = await confirmDialog("¿Salir de la sesión?", "Perderás el avance de esta sesión. Se guardará lo que ya respondiste.");
+      const ok = await confirmDialog("Leave the session?", "You will lose the progress of this session. What you already answered will be saved.");
       if (!ok) return;
       if (session) {
         session.finishedAt = new Date().toISOString();
@@ -1006,7 +1006,7 @@
     });
 
     els.btnRestart.addEventListener("click", async () => {
-      const ok = await confirmDialog("¿Reiniciar el simulacro?", "Se cerrará la sesión actual y empezarás una nueva con preguntas nuevas.");
+      const ok = await confirmDialog("Restart the test?", "The current session will be closed and you will start a new one with new questions.");
       if (!ok) return;
       session = null;
       db.clearActive();
@@ -1027,7 +1027,7 @@
     els.btnReviewWrong.addEventListener("click", () => {
       if (!lastResult) return;
       const wrongIds = lastResult.answers.filter((a) => !a.correct).map((a) => a.qid);
-      if (!wrongIds.length) { toast("No hay preguntas falladas en esta sesión."); return; }
+      if (!wrongIds.length) { toast("No missed questions in this session."); return; }
       startSession({ count: wrongIds.length, onlyIds: wrongIds, mode: "practice", avoidSeen: false });
     });
 
@@ -1046,13 +1046,13 @@
     });
 
     els.btnWipe.addEventListener("click", async () => {
-      const ok = await confirmDialog("¿Borrar todo tu progreso?", "Se eliminarán el historial, las preguntas vistas y la sesión en curso de este navegador.");
+      const ok = await confirmDialog("Erase all your progress?", "History, seen questions and the current session will be removed from this browser.");
       if (!ok) return;
       db.wipe();
       session = null;
       lastResult = null;
       els.btnRestart.hidden = true;
-      toast("Progreso borrado.");
+      toast("Progress erased.");
       renderHome();
       showScreen("home");
     });
@@ -1128,14 +1128,14 @@
     if (!saved.order || !saved.order.length) return false;
     session = saved;
     els.btnRestart.hidden = false;
-    if (session.mode === "exam") els.examScore.textContent = "Aciertos: —";
+    if (session.mode === "exam") els.examScore.textContent = "Correct: —";
     els.streakValue.textContent = String(session.streak || 0);
     showScreen("exam");
     if (session.checked && Object.keys(session.checked).length) {
       // Si la última pregunta ya fue comprobada, mostramos feedback reconstruido
     }
     renderQuestion();
-    toast("Retomamos tu sesión anterior.");
+    toast("Resuming your previous session.");
     return true;
   }
 
@@ -1151,8 +1151,8 @@
 
     if (!QUESTIONS.length) {
       els.btnStart.disabled = true;
-      els.countHint.textContent = "No se pudieron cargar las preguntas (assets/js/data.js).";
-      toast("Falta el archivo de preguntas.");
+      els.countHint.textContent = "Could not load the questions (assets/js/data.js).";
+      toast("The questions file is missing.");
       return;
     }
 
