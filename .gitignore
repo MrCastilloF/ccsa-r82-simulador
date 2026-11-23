@@ -1,0 +1,10 @@
+# Archivos temporales
+*.log
+.DS_Store
+Thumbs.db
+
+# No publicar nunca el contenido en claro ni credenciales
+contenido/
+*.plain.json
+credenciales.txt
+.env

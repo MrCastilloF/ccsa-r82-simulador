@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simulador CCSA R82 · Entrenamiento Check Point</title>
+<meta name="description" content="Simulador de examen Check Point CCSA R82 con preguntas basadas en el material oficial del curso. Elige cuántas preguntas practicar, recibe retroalimentación inmediata y guarda tu progreso." />
+<meta name="theme-color" content="#070b18" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ============ ACCESO PRIVADO ============ -->
+<div class="gate" id="gate" hidden>
+  <div class="gate__bg" aria-hidden="true"></div>
+  <div class="gate__wrap">
+    <section class="gate__intro">
+      <span class="brand brand--lg">
+        <span class="brand__mark">CP</span>
+        <span class="brand__text"><strong>CCSA R82</strong><small>Simulador de examen</small></span>
+      </span>
+      <h1>Entrenamiento privado<br /><span class="grad">Check Point CCSA R82</span></h1>
+      <p>Contenido exclusivo para estudiantes del curso. Inicia sesión con las credenciales que te compartió tu instructor.</p>
+      <ul class="gate__list">
+        <li><span aria-hidden="true">🔒</span> Preguntas cifradas en el navegador</li>
+        <li><span aria-hidden="true">📈</span> Progreso guardado por equipo</li>
+        <li><span aria-hidden="true">🎯</span> Simulacros a tu medida</li>
+      </ul>
+    </section>
+
+    <section class="gate__card" aria-labelledby="gateTitle">
+      <h2 id="gateTitle">Iniciar sesión</h2>
+      <p class="gate__sub">Acceso restringido. Solo usuarios autorizados.</p>
+      <form id="loginForm" novalidate>
+        <div class="field field--plain">
+          <label for="loginUser">Usuario</label>
+          <input id="loginUser" name="username" type="text" autocomplete="username" spellcheck="false" required />
+        </div>
+        <div class="field field--plain">
+          <label for="loginPass">Contraseña</label>
+          <div class="pw">
+            <input id="loginPass" name="password" type="password" autocomplete="current-password" required />
+            <button class="pw__toggle" id="togglePass" type="button" aria-label="Mostrar contraseña">Ver</button>
+          </div>
+        </div>
+        <label class="switch switch--sm">
+          <input type="checkbox" id="rememberMe" checked />
+          <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+          <span class="switch__text"><strong>Mantener la sesión en este equipo</strong></span>
+        </label>
+        <p class="gate__error" id="loginError" role="alert" hidden></p>
+        <button class="btn btn--primary btn--xl" id="loginBtn" type="submit">
+          <span>Entrar al simulador</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </form>
+      <p class="gate__foot">Si no tienes acceso, solicítalo a quien administra este simulador.</p>
+    </section>
+  </div>
+</div>
+
+<div class="aurora" aria-hidden="true">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <span class="blob b3"></span>
+</div>
+
+<header class="topbar" id="topbar">
+  <div class="topbar__left">
+    <a class="brand" href="#" data-go="home" aria-label="Inicio del simulador">
+      <span class="brand__mark">CP</span>
+      <span class="brand__text">
+        <strong>CCSA R82</strong>
+        <small>Simulador de examen</small>
+      </span>
+    </a>
+    <span class="topbar__sep" aria-hidden="true"></span>
+    <p class="topbar__course" id="topbarCourse">Check Point Certified Security Administrator</p>
+  </div>
+
+  <nav class="topbar__actions" aria-label="Acciones principales">
+    <div class="streak" id="streakChip" title="Racha de respuestas correctas en esta sesión">
+      <span class="streak__icon" aria-hidden="true">🔥</span>
+      <span class="streak__value" id="streakValue">0</span>
+    </div>
+    <button class="btn btn--ghost" id="btnHistory" type="button">
+      <span aria-hidden="true">📊</span> Mi progreso
+    </button>
+    <button class="btn btn--ghost" id="btnRestart" type="button" hidden>
+      <span aria-hidden="true">↻</span> Reiniciar
+    </button>
+    <button class="btn btn--ghost" id="btnLogout" type="button" title="Cerrar la sesión protegida">
+      <span aria-hidden="true">⇥</span> Salir
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============ INICIO ============ -->
+  <section class="screen screen--active" id="screen-home" aria-labelledby="homeTitle">
+    <div class="hero">
+      <div class="hero__copy">
+        <span class="eyebrow"><span class="dot"></span> Basado en el material oficial del curso</span>
+        <h1 id="homeTitle">Domina el examen <span class="grad">CCSA R82</span> practicando de verdad.</h1>
+        <p class="hero__lead">
+          Preguntas tomadas del contenido del curso Check Point Certified Security Administrator R82,
+          con retroalimentación al instante, progreso guardado y simulacros del tamaño que tú elijas.
+        </p>
+
+        <ul class="hero__chips" aria-label="Características">
+          <li><span aria-hidden="true">🎯</span> Preguntas del material oficial</li>
+          <li><span aria-hidden="true">🧠</span> Explicación en cada respuesta</li>
+          <li><span aria-hidden="true">💾</span> Tu progreso se guarda solo</li>
+        </ul>
+
+        <div class="hero__stats" id="heroStats">
+          <div class="stat">
+            <span class="stat__num" id="statTotal">—</span>
+            <span class="stat__label">preguntas disponibles</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" id="statModules">—</span>
+            <span class="stat__label">módulos del curso</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" id="statSeen">0</span>
+            <span class="stat__label">preguntas ya vistas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__panel">
+        <div class="card card--config">
+          <div class="card__glow" aria-hidden="true"></div>
+          <h2 class="card__title">Prepara tu sesión</h2>
+          <p class="card__sub">Elige el tamaño del simulacro y cómo quieres practicar.</p>
+
+          <div class="field">
+            <div class="field__head">
+              <label for="qCount">Número de preguntas</label>
+              <output class="field__value" id="qCountOut">20</output>
+            </div>
+            <input type="range" id="qCount" min="5" max="100" step="5" value="20" />
+            <div class="quickpick" id="quickPick" role="group" aria-label="Cantidades rápidas">
+              <button type="button" data-count="10">10</button>
+              <button type="button" data-count="20" class="is-active">20</button>
+              <button type="button" data-count="40">40</button>
+              <button type="button" data-count="0" id="quickAll">Todas</button>
+            </div>
+            <p class="hint" id="countHint">Puedes elegir entre 5 y el total disponible.</p>
+          </div>
+
+          <fieldset class="field">
+            <legend>Modo de práctica</legend>
+            <div class="modes" id="modes">
+              <label class="mode">
+                <input type="radio" name="mode" value="practice" checked />
+                <span class="mode__body">
+                  <span class="mode__title">Práctica guiada</span>
+                  <span class="mode__desc">Ves si acertaste y la explicación al instante.</span>
+                </span>
+              </label>
+              <label class="mode">
+                <input type="radio" name="mode" value="exam" />
+                <span class="mode__body">
+                  <span class="mode__title">Simulacro real</span>
+                  <span class="mode__desc">Sin pistas hasta el final, como en el examen.</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <label class="switch">
+            <input type="checkbox" id="avoidSeen" checked />
+            <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+            <span class="switch__text">
+              <strong>Priorizar preguntas no vistas</strong>
+              <small>Si ya viste muchas, se completan con el resto.</small>
+            </span>
+          </label>
+
+          <button class="btn btn--primary btn--xl" id="btnStart" type="button">
+            <span>Comenzar ahora</span>
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="fineprint">Sin registro. Todo se guarda en este navegador.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="modules" aria-labelledby="modulesTitle">
+      <div class="modules__head">
+        <h2 id="modulesTitle">Temario que cubre el simulador</h2>
+        <p>Cada pregunta indica el módulo y la página del material de donde sale.</p>
+      </div>
+      <div class="module-grid" id="moduleGrid"></div>
+    </section>
+
+    <section class="lastrun" id="lastRun" hidden aria-labelledby="lastRunTitle">
+      <div class="lastrun__body">
+        <div>
+          <h2 id="lastRunTitle">Tu última sesión</h2>
+          <p id="lastRunText"></p>
+        </div>
+        <div class="lastrun__score" id="lastRunScore"></div>
+        <button class="btn btn--outline" id="btnLastDetails" type="button">Ver detalle</button>
+      </div>
+    </section>
+  </section>
+
+  <!-- ============ EXAMEN ============ -->
+  <section class="screen" id="screen-exam" aria-labelledby="examTitle">
+    <div class="exambar">
+      <div class="exambar__top">
+        <div class="exambar__meta">
+          <span class="pill pill--module" id="examModule">Módulo</span>
+          <span class="pill pill--type" id="examType">Selección única</span>
+        </div>
+        <div class="exambar__right">
+          <div class="timer" id="examTimer" title="Tiempo de la sesión"><span aria-hidden="true">⏱</span> <span id="timerValue">00:00</span></div>
+          <button class="btn btn--ghost btn--sm" id="btnAbort" type="button">Salir</button>
+        </div>
+      </div>
+      <div class="progress" role="progressbar" aria-labelledby="examTitle" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressWrap">
+        <div class="progress__fill" id="progressFill"></div>
+      </div>
+      <div class="exambar__bottom">
+        <span id="examCounter">Pregunta 1 de 20</span>
+        <span id="examScore" class="examscore">Aciertos: 0</span>
+      </div>
+    </div>
+
+    <div class="exam-layout">
+      <article class="question-card" id="questionCard">
+        <h1 class="visually-hidden" id="examTitle">Pregunta del simulacro</h1>
+        <div class="question-card__inner">
+          <p class="question__num" id="questionNum">Pregunta 1</p>
+          <h2 class="question__text" id="questionText"></h2>
+          <button class="figure-btn" id="figureBtn" type="button" hidden aria-expanded="false" aria-controls="questionFigure">
+            <span aria-hidden="true">🖼</span>
+            <span id="figureBtnText">Ver la figura del material</span>
+          </button>
+          <figure class="question__figure" id="questionFigure" hidden>
+            <img id="questionImage" alt="" loading="lazy" />
+            <figcaption>
+              <span id="questionCaption"></span>
+              <a class="figure__zoom" id="questionZoom" href="#" target="_blank" rel="noopener">Abrir en pestaña ↗</a>
+            </figcaption>
+          </figure>
+          <p class="question__hint" id="questionHint"></p>
+          <div class="options" id="options" role="group" aria-labelledby="questionText"></div>
+          <div class="feedback" id="feedback" hidden aria-live="polite">
+            <div class="feedback__head">
+              <span class="feedback__icon" id="feedbackIcon" aria-hidden="true"></span>
+              <div>
+                <strong id="feedbackTitle"></strong>
+                <p id="feedbackAnswer"></p>
+              </div>
+            </div>
+            <p class="feedback__explain" id="feedbackExplain"></p>
+            <p class="feedback__source" id="feedbackSource"></p>
+          </div>
+          <div class="question-card__actions">
+            <button class="btn btn--primary" id="btnCheck" type="button" disabled>Comprobar respuesta</button>
+            <button class="btn btn--primary" id="btnNext" type="button" hidden>Siguiente →</button>
+            <button class="btn btn--ghost btn--sm" id="btnSkip" type="button">Saltar</button>
+          </div>
+        </div>
+      </article>
+
+      <aside class="navigator" aria-label="Navegación de preguntas">
+        <div class="navigator__head">
+          <h2>Mapa de la sesión</h2>
+          <span id="navProgress">0/0</span>
+        </div>
+        <div class="navigator__grid" id="navGrid"></div>
+        <div class="navigator__legend">
+          <span><i class="lg lg--ok"></i>Correcta</span>
+          <span><i class="lg lg--bad"></i>Incorrecta</span>
+          <span><i class="lg lg--now"></i>Actual</span>
+        </div>
+        <button class="btn btn--outline btn--block" id="btnFinishEarly" type="button" hidden>Finalizar y ver resultado</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ RESULTADOS ============ -->
+  <section class="screen" id="screen-results" aria-labelledby="resTitle">
+    <div class="result-hero">
+      <div class="result-hero__score">
+        <svg class="ring" viewBox="0 0 120 120" role="img" aria-labelledby="ringLabel">
+          <title id="ringLabel">Puntaje de la sesión</title>
+          <circle class="ring__bg" cx="60" cy="60" r="52"></circle>
+          <circle class="ring__bar" id="ringBar" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="ring__center">
+          <span class="ring__pct" id="resPercent">0%</span>
+          <span class="ring__label">de acierto</span>
+        </div>
+      </div>
+      <div class="result-hero__copy">
+        <span class="pill" id="resVerdict">Resultado</span>
+        <h1 id="resTitle">¡Sesión completada!</h1>
+        <p id="resMessage"></p>
+        <div class="result-facts">
+          <div><strong id="resCorrect">0</strong><span>correctas</span></div>
+          <div><strong id="resWrong">0</strong><span>incorrectas</span></div>
+          <div><strong id="resTotal">0</strong><span>preguntas</span></div>
+          <div><strong id="resTime">00:00</strong><span>tiempo</span></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn--primary" id="btnNewSession" type="button">Nueva sesión</button>
+          <button class="btn btn--outline" id="btnReviewWrong" type="button" hidden>Repasar solo las falladas</button>
+          <button class="btn btn--ghost" id="btnBackHome" type="button">Volver al inicio</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-grid">
+      <section class="panel" aria-labelledby="breakdownTitle">
+        <div class="panel__head">
+          <h2 id="breakdownTitle">Desempeño por módulo</h2>
+          <p>Así se reparte tu resultado en el temario.</p>
+        </div>
+        <div class="breakdown" id="breakdown"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="trendTitle">
+        <div class="panel__head">
+          <h2 id="trendTitle">Tu historial</h2>
+          <p id="trendHint">Cada sesión terminada queda guardada.</p>
+        </div>
+        <canvas id="trendChart" height="180" aria-label="Gráfico de tus últimos puntajes" role="img"></canvas>
+        <ul class="history" id="historyList"></ul>
+      </section>
+    </div>
+
+    <section class="review" aria-labelledby="reviewTitle">
+      <div class="review__head">
+        <h2 id="reviewTitle">Revisión pregunta por pregunta</h2>
+        <div class="review__filter" id="reviewFilter" role="group" aria-label="Filtrar revisión">
+          <button type="button" data-filter="all" class="is-active">Todas</button>
+          <button type="button" data-filter="wrong">Falladas</button>
+          <button type="button" data-filter="right">Acertadas</button>
+        </div>
+      </div>
+      <div class="review__list" id="reviewList"></div>
+    </section>
+  </section>
+
+  <!-- ============ PROGRESO ============ -->
+  <section class="screen" id="screen-progress" aria-labelledby="progTitle">
+    <div class="progress-page__head">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> Tu progreso</span>
+        <h1 id="progTitle">Todo lo que has practicado</h1>
+        <p>Se guarda en este navegador (almacenamiento local y cookies). Puedes borrarlo cuando quieras.</p>
+      </div>
+      <div class="progress-page__actions">
+        <button class="btn btn--ghost" id="btnBackHome2" type="button">← Volver</button>
+        <button class="btn btn--danger-ghost" id="btnWipe" type="button">Borrar mi progreso</button>
+      </div>
+    </div>
+
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <div class="result-grid">
+      <section class="panel">
+        <div class="panel__head">
+          <h2>Evolución de tus puntajes</h2>
+          <p>Los últimos 12 simulacros.</p>
+        </div>
+        <canvas id="progressChart" height="220" aria-label="Evolución de puntajes" role="img"></canvas>
+      </section>
+      <section class="panel">
+        <div class="panel__head">
+          <h2>Cobertura del banco</h2>
+          <p>Preguntas que ya has respondido al menos una vez.</p>
+        </div>
+        <div class="coverage" id="coverage"></div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel__head">
+        <h2>Historial de sesiones</h2>
+        <p>Cada fila es un simulacro terminado.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="table" id="sessionTable">
+          <thead>
+            <tr><th>Fecha</th><th>Modo</th><th>Aciertos</th><th>Puntaje</th><th>Tiempo</th><th>Estado</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel__head">
+        <h2>Preguntas vistas</h2>
+        <p>Las que ya aparecieron en alguna sesión, con tu último resultado.</p>
+      </div>
+      <div class="seen-list" id="seenList"></div>
+    </section>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>
+    Simulador de estudio independiente. Contenido elaborado a partir del material del curso
+    <strong>Check Point Certified Security Administrator (CCSA) R82</strong>.
+    No está afiliado ni avalado por Check Point Software Technologies.
+  </p>
+  <p class="footer__meta">
+    <span id="footerCount">—</span> preguntas · <span id="footerBuild">v1.0</span> ·
+    <button class="linkbtn" id="btnFooterHistory" type="button">Mi progreso</button>
+  </p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<dialog class="dialog" id="dlgConfirm">
+  <form method="dialog" class="dialog__body">
+    <h2 id="dlgTitle">¿Seguro?</h2>
+    <p id="dlgText"></p>
+    <div class="dialog__actions">
+      <button class="btn btn--ghost" value="cancel" type="submit">Cancelar</button>
+      <button class="btn btn--primary" value="ok" type="submit">Sí, continuar</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/auth.js"></script>
+</body>
+</html>
