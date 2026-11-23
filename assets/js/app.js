@@ -168,10 +168,18 @@
   /* 3. Datos del curso                                                 */
   /* ------------------------------------------------------------------ */
 
-  const QUESTIONS = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
-  const MODULES = Array.isArray(window.MODULES) ? window.MODULES : [];
-  const byId = new Map(QUESTIONS.map((q) => [q.id, q]));
-  const moduleById = new Map(MODULES.map((m) => [m.id, m]));
+  // El contenido llega DESPUÉS del login, así que se resuelve en cada arranque.
+  let QUESTIONS = [];
+  let MODULES = [];
+  let byId = new Map();
+  let moduleById = new Map();
+
+  function refreshData() {
+    QUESTIONS = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
+    MODULES = Array.isArray(window.MODULES) ? window.MODULES : [];
+    byId = new Map(QUESTIONS.map((q) => [q.id, q]));
+    moduleById = new Map(MODULES.map((m) => [m.id, m]));
+  }
 
   const moduleName = (id) => (moduleById.get(id) || {}).name || id;
   const moduleShort = (id) => (moduleById.get(id) || {}).short || moduleName(id);
@@ -1129,6 +1137,7 @@
   }
 
   function boot() {
+    refreshData();
     bindEls();
     bindEvents();
 

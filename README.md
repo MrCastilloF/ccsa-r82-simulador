@@ -6,6 +6,8 @@ Se abre desde un enlace, no requiere instalar nada y guarda tu progreso en el na
 > **Acceso privado.** El sitio pide usuario y contraseña. Las credenciales las entrega quien
 > administra el simulador; no están escritas en este repositorio.
 
+**Sitio publicado:** <https://mrcastillof.github.io/ccsa-r82-simulador/>
+
 ---
 
 ## 1. Qué incluye
@@ -69,6 +71,11 @@ También vale `npx serve .` o la extensión *Live Server* de VS Code.
 
 ## 4. Publicar en GitHub Pages (gratis)
 
+Este proyecto ya está publicado: **<https://mrcastillof.github.io/ccsa-r82-simulador/>**.
+GitHub Pages sirve el contenido de la rama **`gh-pages`**.
+
+Para recrearlo desde cero:
+
 1. Crea un repositorio (puede ser público) y sube el contenido de esta carpeta:
 
    ```bash
@@ -78,17 +85,19 @@ También vale `npx serve .` o la extensión *Live Server* de VS Code.
    git branch -M main
    git remote add origin https://github.com/TU_USUARIO/TU_REPO.git
    git push -u origin main
+   git push origin main:gh-pages    # esta rama activa GitHub Pages
    ```
 
-2. En GitHub: **Settings → Pages**.
-3. En *Build and deployment* elige **Deploy from a branch**, rama `main`, carpeta `/ (root)` y **Save**.
-4. En 1–2 minutos el sitio queda en:
+2. En GitHub: **Settings → Pages** → *Deploy from a branch*, rama **`gh-pages`**, carpeta `/ (root)` → **Save**.
+   (Si la rama `gh-pages` ya existe, GitHub suele activarlo automáticamente.)
+3. En 1–2 minutos el sitio queda en `https://TU_USUARIO.github.io/TU_REPO/`.
 
-   ```
-   https://TU_USUARIO.github.io/TU_REPO/
-   ```
+### Actualizar el sitio
 
-5. Entra, inicia sesión y compártelo solo con quien deba tener acceso.
+```bash
+git add -A && git commit -m "Cambios" && git push origin main
+git push origin main:gh-pages        # publica la última versión
+```
 
 > El repositorio contiene únicamente el contenido **cifrado** (`assets/data/content.enc.json`)
 > y la huella del usuario (`assets/data/auth.json`). El banco en claro no se publica.
