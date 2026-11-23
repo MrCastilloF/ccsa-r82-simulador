@@ -23,7 +23,7 @@ const salt = Buffer.from(auth.salt, "base64");
 const userHash = crypto.createHash("sha256").update(user.toLowerCase() + "|" + auth.salt).digest("hex");
 console.log("usuario correcto:", userHash === auth.userHash);
 
-const key = crypto.pbkdf2Sync(pass, salt, auth.iterations, 32, "sha256");
+const key = crypto.pbkdf2Sync(pass.trim().toLowerCase(), salt, auth.iterations, 32, "sha256");
 const raw = Buffer.from(payload.data, "base64");
 const iv = Buffer.from(payload.iv, "base64");
 const tag = raw.subarray(raw.length - 16);

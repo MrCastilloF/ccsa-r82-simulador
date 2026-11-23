@@ -117,7 +117,8 @@
     }
 
     const username = els.user.value.trim();
-    const password = els.pass.value;
+    // Normalización acordada: se ignoran espacios al inicio/fin y mayúsculas.
+    const password = els.pass.value.trim().toLowerCase();
     if (!username || !password) {
       showError("Escribe tu usuario y tu contraseña.");
       return;

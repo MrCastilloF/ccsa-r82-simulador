@@ -46,6 +46,9 @@ La contraseña **no se guarda** en el servidor ni en el repositorio. Con ella se
 (AES-256-GCM + PBKDF2-SHA256, 310 000 iteraciones) que descifra el banco de preguntas en tu navegador.
 Si la contraseña es incorrecta, el contenido no se puede descifrar.
 
+El inicio de sesión **no distingue mayúsculas** y **ignora los espacios** al inicio y al final, para
+evitar problemas al teclear o pegar desde el móvil.
+
 ### Sobre el progreso
 
 - Cada sesión nueva empieza desde cero: no arrastra respuestas anteriores.
