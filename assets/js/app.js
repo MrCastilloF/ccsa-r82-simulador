@@ -719,7 +719,9 @@
     renderReview(result);
 
     els.btnReviewWrong.hidden = result.wrong === 0;
-    els.btnReviewWrong.textContent = `Repasar las ${result.wrong} falladas`;
+    els.btnReviewWrong.textContent = result.wrong === 1
+      ? "Repasar la fallada"
+      : `Repasar las ${result.wrong} falladas`;
   }
 
   function renderBreakdown(result) {

@@ -41,7 +41,7 @@
 /* El atributo hidden debe ganar siempre a los display de los componentes */
 [hidden] { display: none !important; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: #070b18; }
 
 body {
   margin: 0;
