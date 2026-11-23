@@ -426,7 +426,7 @@
     if (isMulti(q)) {
       const need = q.answer.length;
       els.questionHint.style.display = "";
-      els.questionHint.textContent = `Selecciona ${need} respuestas. Esta pregunta requiere más de una opción.`;
+      els.questionHint.textContent = `Select ${need} answers. This question needs more than one option.`;
     } else {
       els.questionHint.style.display = "none";
     }
@@ -462,7 +462,7 @@
       renderFeedback(q, true);
       els.btnCheck.hidden = true;
       els.btnNext.hidden = false;
-      els.btnNext.textContent = session.index + 1 >= session.total ? "Ver resultado →" : "Siguiente →";
+      els.btnNext.textContent = session.index + 1 >= session.total ? "See results →" : "Next →";
       els.btnSkip.hidden = true;
     } else {
       els.btnCheck.hidden = false;
@@ -471,9 +471,9 @@
       els.btnSkip.hidden = false;
       els.feedback.hidden = true;
       if (session.mode === "exam") {
-        els.btnCheck.textContent = "Guardar y seguir";
+        els.btnCheck.textContent = "Save and continue";
       } else {
-        els.btnCheck.textContent = "Comprobar respuesta";
+        els.btnCheck.textContent = "Check answer";
       }
     }
 
@@ -560,7 +560,7 @@
 
     els.btnCheck.hidden = true;
     els.btnNext.hidden = false;
-    els.btnNext.textContent = session.index + 1 >= session.total ? "Ver resultado →" : "Siguiente →";
+    els.btnNext.textContent = session.index + 1 >= session.total ? "See results →" : "Next →";
     els.btnSkip.hidden = true;
     els.examScore.textContent = `Correct: ${session.correctCount}`;
     els.progressFill.style.width = `${((session.index + 1) / session.total) * 100}%`;
