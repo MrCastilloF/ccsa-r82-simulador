@@ -8,8 +8,13 @@ import crypto from "node:crypto";
 import path from "node:path";
 
 const site = process.argv[2] || "checkpoint-ccsa";
-const user = process.argv[3] || "estudiante";
-const pass = process.argv[4] || "CcsaR82#2026";
+const user = process.argv[3];
+const pass = process.argv[4];
+
+if (!user || !pass) {
+  console.error("Uso: node tools/verify-decrypt.mjs <carpeta-del-sitio> <usuario> <contraseña>");
+  process.exit(1);
+}
 
 const auth = JSON.parse(fs.readFileSync(path.join(site, "assets/data/auth.json"), "utf8"));
 const payload = JSON.parse(fs.readFileSync(path.join(site, "assets/data/content.enc.json"), "utf8"));
