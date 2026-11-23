@@ -143,10 +143,15 @@ checkpoint-ccsa/
 ├── tools/
 │   ├── merge-content.mjs       Une los módulos en preguntas.json
 │   ├── build-content.mjs       Cifra el banco y genera auth.json
-│   └── verify-decrypt.mjs      Comprueba credenciales y descifrado
+│   ├── verify-decrypt.mjs      Comprueba credenciales y descifrado
+│   └── make-preview.mjs        Copia local sin login (solo para revisar diseño)
 ├── .nojekyll
 └── README.md
 ```
+
+El banco **en claro** (`contenido/`) se entrega aparte, fuera del repositorio público, junto con las
+capturas del material. Por eso los scripts se ejecutan desde la carpeta padre que contiene
+`contenido/` y la carpeta de la app.
 
 ---
 
