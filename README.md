@@ -165,6 +165,9 @@ Todo el contenido proviene del material del curso **Check Point Certified Securi
   (por ejemplo: *Módulo 4 · página 197*).
 - Las explicaciones parafrasean lo que dice el material; no se añadieron conceptos externos.
 - Las figuras adjuntas se recortaron de las páginas correspondientes y se referencian con su página.
+- Las opciones se reordenan de forma determinista al generar el contenido (semilla por pregunta),
+  de modo que la respuesta correcta queda repartida entre todas las posiciones y no siempre en la
+  misma letra. El orden es estable entre compilaciones.
 
 ### Cobertura por módulo
 

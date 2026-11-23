@@ -250,7 +250,8 @@
 
     els.qCount.min = "5";
     els.qCount.max = String(max);
-    els.qCount.step = max <= 20 ? "1" : "5";
+    // Paso 1: con paso 5 el deslizador no alcanzaba el total cuando no era múltiplo de 5.
+    els.qCount.step = "1";
     els.qCount.value = String(Math.min(desired, max));
     els.btnStart.disabled = totalQuestions() === 0;
 
