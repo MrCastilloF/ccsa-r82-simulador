@@ -14,7 +14,7 @@ It opens from a link, needs no installation and stores your progress in the brow
 
 | Feature | Detail |
 | --- | --- |
-| Question bank | **132 questions** across the **10 modules** of the course |
+| Question bank | **182 questions** across the **10 modules** of the course |
 | Question types | Single choice (99) and multiple choice (33), with a clear hint when several options must be picked |
 | Session size | You choose how many questions to answer, up to the whole bank |
 | No repeats | Inside a session each question appears once, in random order |
@@ -171,21 +171,29 @@ material (*Security Administrator* student guide, 521 pages).
   so the correct answer is spread across all positions instead of always being the same letter.
   The order is stable between builds.
 - Options were written with comparable lengths, so length alone rarely reveals the answer.
+- A question history keeps, for every question, its id, the concept it evaluates, its module and its
+  page (`contenido/historial.json`). It lives outside the public repository because it contains the
+  bank in plain text, and it is consulted before adding new questions so the same concept is never
+  evaluated twice.
+- The current bank is **182 questions**: the original 132 plus **50 added on 2026-11-25**, all taken
+  from pages the first version did not use (preface resources, CLI verification commands, rule and
+  zone details, layer management, log queries and actions, identity sources, HTTPS Inspection
+  settings, URL Filtering practices and Threat Prevention profiles).
 
 ### Coverage by module
 
 | Module | Name | Questions | Pages |
 | --- | --- | --- | --- |
-| 1 | Introduction to Quantum Security | 24 | 19–49 |
-| 2 | Administrator Account Management | 14 | 105–121 |
-| 3 | Object Management | 12 | 157–166 |
-| 4 | Security Policy Management | 21 | 191–220 |
-| 5 | Policy Layers | 9 | 247–256 |
-| 6 | Security Operations Monitoring | 14 | 287–313 |
-| 7 | Identity Awareness | 12 | 361–372 |
-| 8 | HTTPS Inspection | 11 | 423–435 |
-| 9 | Application Control and URL Filtering | 7 | 465–471 |
-| 10 | Threat Prevention Fundamentals | 8 | 497–504 |
+| 1 | Introduction to Quantum Security | 32 | 19–49 |
+| 2 | Administrator Account Management | 19 | 105–121 |
+| 3 | Object Management | 16 | 157–166 |
+| 4 | Security Policy Management | 29 | 191–220 |
+| 5 | Policy Layers | 12 | 247–256 |
+| 6 | Security Operations Monitoring | 22 | 287–313 |
+| 7 | Identity Awareness | 16 | 361–372 |
+| 8 | HTTPS Inspection | 17 | 423–435 |
+| 9 | Application Control and URL Filtering | 9 | 465–471 |
+| 10 | Threat Prevention Fundamentals | 10 | 497–504 |
 
 The pages in between are guided labs (click-by-click steps in the environment), which is why they do
 not produce exam questions.
